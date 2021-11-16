@@ -1,40 +1,37 @@
 #!/bin/env bash
 
-export BIN_DIR=`pwd` 
+BIN_DIR="$(pwd)";
+export BIN_DIR;
 
-function Z_select_env {
+function Z_selectEnv() {
+printf "Tools Type:\n 1) Commands \n 2) Files \n Please select: \n";
 
-echo " \
-Tools Type:\n \
-    1) Commands\n\
-    2) Files \n\
-    Please select: \n";
+unset -f `export -f | grep 'Z_.*()' | grep -v "Z_selectEnv" | awk '{print $1}'`;
 
-unset -f "Z_*";
-read -t 0 -p 1 NUM;
-if [ "$NUM" == "1" ]; then
-	source ${BIN_DIR}/Commands/env.sh
-elif [ "$NUM" == "2" ]; then
-	source ${BIN_DIR}/Files/env.sh
+read -r NUM;
+if [[ "$NUM" == "1" ]]; then
+	source "${BIN_DIR}/Commands/env.sh";
+elif [[ "$NUM" == "2" ]]; then
+	source "${BIN_DIR}/Files/env.sh";
 else
 	echo "No valid input."
 fi
 
 }
 
-function Z_env {
+function Z_env() {
 source ${BIN_DIR}/Commands/env.sh;
 source ${BIN_DIR}/Files/env.sh;
 }
 
-function Z_clearEnv {
+function Z_clearEnv() {
 unset -f Z_env;
 }
 
-alias grep='grep --color'
-export -f Z_select_env
+#alias grep='grep --color'
+export -f Z_selectEnv
 export -f Z_env
 export -f Z_clearEnv
 
 Z_env
-echo "Env Commands: Z_select_env | Z_env is loaded !"
+echo "Env Commands: Z_selectEnv | Z_env is loaded !"
