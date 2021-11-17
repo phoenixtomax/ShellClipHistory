@@ -28,7 +28,9 @@ function Z_clearEnv() {
 unset -f Z_env;
 }
 
-#alias grep='grep --color'
+unalias grep
+alias grep='grep --color'
+
 export -f Z_selectEnv
 export -f Z_env
 export -f Z_clearEnv
