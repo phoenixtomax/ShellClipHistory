@@ -8,11 +8,14 @@ elif [ -f "$1_bk" ]; then
   mv "$1" "$1"_temp
   mv "$1"_bk "$1"
   mv "$1"_temp "$1"_bk
+
+  echo "$1 <=> $1_bk"
   echo "mv $1 $1_temp";
   echo "mv $1_bk $1";
   echo "mv $1_temp $1_bk";
 else
   cp "$1" "$1"_bk;
+  echo "$1 => $1_bk"
   echo "cp $1 $1_bk";
 fi
 
@@ -21,19 +24,23 @@ fi
 # TODO: Check rsync existence or download it
 
 function Z_emv {
-  rsync -avh --remove-source-files --progress  "$1" "$2";
+  echo "Emv $3 $1 $2"
+  rsync -avh "$3" --remove-source-files --progress  "$1" "$2";
 }
 
 function Z_ecmv {
-  rsync -avzh --remove-source-files --progress  "$1" "$2";
+  echo "Compressed Emv $3 $1 $2"
+  rsync -avzh "$3" --remove-source-files --progress  "$1" "$2";
 }
 
 function Z_syncf {
-  rsync -avh --progress  "$1" "$2";
+  echo "SynFile $3 $1 $2"
+  rsync -avh "$3" --progress  "$1" "$2";
 }
 
 function Z_synccf {
-  rsync -avzh --progress  "$1" "$2";
+  echo "Compressed SynFile $3 $1 $2"
+  rsync -avzh "$3" --progress  "$1" "$2";
 }
 
 function Z_remotesyncf {
