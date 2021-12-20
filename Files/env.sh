@@ -1,5 +1,28 @@
 #!/bin/env bash
 
+function Z_rename {
+
+echo $# $@
+if [ $# -lt 3 ]; then
+  echo "Help: Z_rename new_name new_start_suffix_number target_name";
+else
+  count=0
+  newname=""
+  for i in "$@"; do
+    if [ "${count}" = "0" ]; then
+      newname=${i};
+    elif [ "${count}" = "1" ]; then
+      count=${i};
+      continue
+    else
+      mv ${i} ${newname%.*}_${count}.${i##*.};
+    fi
+    ((count++));
+  done
+fi
+
+}
+
 function Z_swap {
 
 if [ "$1" = "" ]; then
